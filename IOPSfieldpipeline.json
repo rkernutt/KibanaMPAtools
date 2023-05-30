@@ -1,0 +1,19 @@
+﻿PUT _ingest/pipeline/metrics-system.diskio@custom
+{
+  "processors": [
+    {
+      "script": {
+        "lang": "painless",
+        "source": "ctx.diskreadiops = ctx.system.diskio.read.count / (ctx.system.diskio.read.time / 1000)",
+        "ignore_failure": true
+      }
+    },
+    {
+      "script": {
+        "lang": "painless",
+        "source": "ctx.diskwriteiops = ctx.system.diskio.write.count / (ctx.system.diskio.write.time / 1000)",
+        "ignore_failure": true
+      }
+    }
+  ]
+}
